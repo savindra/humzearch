@@ -1,0 +1,8 @@
+package iit.musicrecognizer;
+
+import android.support.v7.app.ActionBarActivity;
+
+@SuppressWarnings("deprecation")
+public class RecordTuneActivity extends ActionBarActivity {
+
+}

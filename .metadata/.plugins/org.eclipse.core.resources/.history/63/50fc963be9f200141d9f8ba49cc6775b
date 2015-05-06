@@ -1,0 +1,38 @@
+package iit.musicrecognizer;
+
+import android.media.MediaRecorder;
+import android.os.Bundle;
+import android.os.Environment;
+import android.support.v7.app.ActionBarActivity;
+import android.widget.Button;
+
+@SuppressWarnings("deprecation")
+public class RecordTuneActivity extends ActionBarActivity {
+	
+	 private MediaRecorder myAudioRecorder;
+	 private String outputFile = null;
+	 private Button start,stop,play;
+	 
+	 @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.recordtune_layout);
+        start = (Button)findViewById(R.id.btnStartRecord);
+        stop = (Button)findViewById(R.id.btnStopRecord);
+        play = (Button)findViewById(R.id.btnPlayRecord);
+
+        stop.setEnabled(false);
+        play.setEnabled(false);
+        outputFile = Environment.getExternalStorageDirectory().
+                getAbsolutePath() + "/myrecording.3gp";
+
+        myAudioRecorder = new MediaRecorder();
+        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        myAudioRecorder.setOutputFile(outputFile);
+
+
+    }
+
+}

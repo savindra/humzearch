@@ -1,0 +1,7 @@
+INDEX VERSION 1.127+E:\IIT\1st Year\SDP II\CWK 2\humzearch\.metadata\.plugins\org.eclipse.jdt.core
+3853799103.index
+892765840.index
+2730432435.index
+2391115708.index
+407399811.index
+3203370399.index

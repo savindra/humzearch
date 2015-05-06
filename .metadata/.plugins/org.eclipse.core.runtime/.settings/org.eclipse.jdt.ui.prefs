@@ -1,0 +1,20 @@
+content_assist_disabled_computers=org.eclipse.jdt.ui.textProposalCategory\u0000org.eclipse.recommenders.calls.rcp.proposalCategory.templates\u0000org.eclipse.mylyn.java.ui.javaAllProposalCategory\u0000org.eclipse.jdt.ui.javaAllProposalCategory\u0000org.eclipse.jdt.ui.javaTypeProposalCategory\u0000org.eclipse.jdt.ui.javaNoTypeProposalCategory\u0000org.eclipse.recommenders.chain.rcp.proposalCategory.chain\u0000
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="android.content.ComponentCallbacks2"><rhs name\="iit.musicrecognizer.TabViewTunes"/><rhs name\="iit.musicrecognizer.TabBar"/><rhs name\="iit.musicrecognizer.MainMenu"/></lhs><lhs name\="android.view.View$OnCreateContextMenuListener"><rhs name\="iit.musicrecognizer.TabViewTunes"/><rhs name\="iit.musicrecognizer.TabBar"/><rhs name\="iit.musicrecognizer.MainMenu"/></lhs><lhs name\="android.content.ComponentCallbacks"><rhs name\="iit.musicrecognizer.TabViewTunes"/><rhs name\="iit.musicrecognizer.TabBar"/><rhs name\="iit.musicrecognizer.MainMenu"/></lhs><lhs name\="android.app.Fragment"><rhs name\="iit.musicrecognizer.TabViewTunes"/></lhs><lhs name\="android.widget.TabHost$OnTabChangeListener"><rhs name\="iit.musicrecognizer.TabBar"/></lhs><lhs name\="android.app.TabActivity"><rhs name\="iit.musicrecognizer.TabBar"/></lhs><lhs name\="android.app.ActivityGroup"><rhs name\="iit.musicrecognizer.TabBar"/></lhs><lhs name\="android.app.Activity"><rhs name\="iit.musicrecognizer.TabBar"/><rhs name\="iit.musicrecognizer.MainMenu"/></lhs><lhs name\="android.view.LayoutInflater$Factory2"><rhs name\="iit.musicrecognizer.TabBar"/><rhs name\="iit.musicrecognizer.MainMenu"/></lhs><lhs name\="android.view.Window$Callback"><rhs name\="iit.musicrecognizer.TabBar"/><rhs name\="iit.musicrecognizer.MainMenu"/></lhs><lhs name\="android.view.KeyEvent$Callback"><rhs name\="iit.musicrecognizer.TabBar"/><rhs name\="iit.musicrecognizer.MainMenu"/></lhs><lhs name\="android.view.LayoutInflater$Factory"><rhs name\="iit.musicrecognizer.TabBar"/><rhs name\="iit.musicrecognizer.MainMenu"/></lhs><lhs name\="android.view.ContextThemeWrapper"><rhs name\="iit.musicrecognizer.TabBar"/><rhs name\="iit.musicrecognizer.MainMenu"/></lhs><lhs name\="android.content.ContextWrapper"><rhs name\="iit.musicrecognizer.TabBar"/><rhs name\="iit.musicrecognizer.MainMenu"/></lhs><lhs name\="android.content.Context"><rhs name\="iit.musicrecognizer.TabBar"/><rhs name\="iit.musicrecognizer.MainMenu"/></lhs><lhs name\="iit.musicrecognizer.TabBar"><rhs name\="iit.musicrecognizer.TabBar"/></lhs><lhs name\="android.app.ActionBar$TabListener"><rhs name\="iit.musicrecognizer.TabListener"/></lhs><lhs name\="iit.musicrecognizer.MainMenu"><rhs name\="iit.musicrecognizer.MainMenu"/></lhs><lhs name\="android.os.Parcelable"><rhs name\="android.content.Intent"/></lhs><lhs name\="java.lang.Cloneable"><rhs name\="android.content.Intent"/></lhs><lhs name\="android.content.Intent"><rhs name\="android.content.Intent"/></lhs></history>
+content_assist_number_of_computers=20
+content_assist_proposals_background=255,255,255
+content_assist_proposals_foreground=0,0,0
+eclipse.preferences.version=1
+fontPropagated=true
+org.eclipse.jdt.ui.editor.tab.width=
+org.eclipse.jdt.ui.formatterprofiles.version=12
+org.eclipse.jdt.ui.javadoclocations.migrated=true
+org.eclipse.jdt.ui.text.code_templates_migrated=true
+org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.templates_migrated=true
+org.eclipse.jface.textfont=1|Consolas|10.0|0|WINDOWS|1|0|0|0|0|0|0|0|0|1|0|0|0|0|Consolas;
+proposalOrderMigrated=true
+spelling_locale_initialized=true
+tabWidthPropagated=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true

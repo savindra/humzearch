@@ -1,0 +1,16 @@
+1430637279736	Rename type 'TabViewTunes'
+1430716887222	Extracts string 'null' into R.string.email
+1430717156281	Extracts string 'null' into R.string.name
+1430717290659	Extracts string 'null' into R.string.password
+1430725724305	Extracts string 'null' into R.string.lblConfirmPass
+1430727551521	Rename resource 'registration_bg.xml'
+1430737945113	Delete element
+1430753343866	Extracts string 'null' into R.string.btnviewtune
+1430753369171	Extracts string 'null' into R.string.btnrecordtune
+1430754156176	Extracts string 'null' into R.string.btnresponses
+1430754218415	Extracts string 'null' into R.string.btnrewards
+1430754258927	Extracts string 'null' into R.string.btnmyaccount
+1430754317376	Extracts string 'null' into R.string.btnexit
+1430762626172	Extracts string 'null' into R.string.lblhello
+1430762805077	Extracts string 'null' into R.string.lblwelcome
+1430922584998	Rename type 'responsesActivity'

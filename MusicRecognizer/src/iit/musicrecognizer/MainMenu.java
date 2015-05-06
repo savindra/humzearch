@@ -1,0 +1,103 @@
+package iit.musicrecognizer;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+public class MainMenu extends Activity {
+	
+	private Button viewTunesButton;
+	private Button recordTuneButton;
+	private Button responsesButton;
+	private Button rewardsButton;
+	private Button myAccountButton;
+	
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.mainmenu_layout);
+        
+        recordTuneButton = (Button) findViewById(R.id.btnRecordTune);
+        viewTunesButton = (Button) findViewById(R.id.viewtunes);
+        responsesButton = (Button) findViewById(R.id.btnResponses);
+        rewardsButton = (Button) findViewById(R.id.btnRewards);
+        myAccountButton = (Button) findViewById(R.id.btnMyAccount);
+        
+        recordTuneButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent recordTunesScreen = new Intent(getApplicationContext(), RecordTuneActivity.class);
+				startActivity(recordTunesScreen);
+			}
+		});
+        
+        viewTunesButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent viewTunesScreen = new Intent(getApplicationContext(), ViewTunes.class);
+				startActivity(viewTunesScreen);
+				
+			}
+		});
+        
+        responsesButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent responsesScreen = new Intent(getApplicationContext(), ResponsesActivity.class);
+				startActivity(responsesScreen);
+				
+			}
+		});
+        
+        rewardsButton.setOnClickListener( new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent rewardsScreen = new Intent(getApplicationContext(), RewardsActivity.class);
+				startActivity(rewardsScreen);
+				
+			}
+		});
+        
+        myAccountButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent myAccountScreen = new Intent(getApplicationContext(), MyAccountActivity.class);
+				startActivity(myAccountScreen);
+				
+			}
+		});
+        
+        
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+}
