@@ -1,0 +1,47 @@
+package iit.musicrecognizer;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Properties;
+
+import android.os.AsyncTask;
+
+public class Login extends AsyncTask<String, Void, String> {
+
+	@Override
+	protected String doInBackground(String... params) {
+		String email = params[0];
+		String password = params[1];
+		
+		String link = getURL() + "login.php";
+		
+		try {
+			String data = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
+			
+			URL url = new URL(link);
+			
+		} catch (Exception e) {
+			return new String("Exception: " + e.getMessage());
+		}
+		
+		
+	}
+	
+	public String getURL(){
+		Properties prop = new Properties();
+		InputStream input = null;
+		try{
+			input = new FileInputStream("config.properties");
+			prop.load(input);
+			return prop.getProperty("url");
+		} catch(IOException e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+}

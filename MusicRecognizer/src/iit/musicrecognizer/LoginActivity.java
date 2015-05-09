@@ -8,26 +8,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class LoginActivity extends Activity {
+	
+	private EditText emailField, passwordField;
+	private TextView result;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
         
-        Button loginButton = (Button) findViewById(R.id.loginButton);
-        
-        loginButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent mainMenuScreen = new Intent(getApplicationContext(), MainMenu.class);
-				startActivity(mainMenuScreen);
-				
-			}
-		});
-        
+        emailField = (EditText) findViewById(R.id.txtLoginEmail);
+        passwordField = (EditText) findViewById(R.id.txtLoginPass);
+        result = (TextView) findViewById(R.id.txtLoginResult);
     }
 
 
@@ -48,6 +44,12 @@ public class LoginActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    public void login(View view){
+    	String email = emailField.getText().toString();
+    	String password = passwordField.getText().toString();
+    	new Login(this, result).execute(email, password);
     }
 
 }

@@ -1,7 +1,0 @@
-package iit.musicrecognizer;
-
-import android.app.Fragment;
-
-public class TabViewTunes extends Fragment {
-
-}
