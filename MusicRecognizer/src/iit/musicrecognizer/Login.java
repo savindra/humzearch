@@ -1,40 +1,42 @@
 package iit.musicrecognizer;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.Properties;
-
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
-public class Login extends AsyncTask<String, Void, String> {
+public class Login extends AsyncTask<String, Long, String> {
 
 	private TextView resultField;
 	private Context context;
-	String email;
-	String password;
+	private String email;
+	private String password;
+	private ProgressDialog progressDialog;
 	
 	public Login(Context context, TextView result) {
 		this.context = context;
 		resultField = result;
+	}
+	
+	@Override
+	protected void onPreExecute() {
+	    try {
+	        progressDialog = ProgressDialog.show(context, "Login", "Please Wait...Login in Progress..", true);
+	    } catch (final Throwable th) {
+	        //TODO
+	    }
 	}
 
 	@Override
@@ -42,7 +44,10 @@ public class Login extends AsyncTask<String, Void, String> {
 		email = params[0];
 		password = params[1];
 		
-		String link = "http://192.168.1.2/humzearch/" + "login.php";
+		int urlID = R.string.url;
+		String host = context.getResources().getString(urlID);
+		
+		String link = host + "login.php";
 		System.out.println(link);
 		StringBuilder sb = new StringBuilder();
 		
@@ -97,12 +102,19 @@ public class Login extends AsyncTask<String, Void, String> {
 		
 	}
 	
+	protected void onProgressUpdate(Long... progress) {
+	    //do something
+	    super.onProgressUpdate(progress);
+	}
+	
 	protected void onPostExecute(String result){
+		progressDialog.dismiss();
 		if(result.equals("0")){
 			this.resultField.setText("This email is not registered with humzearch.");
 		} else if(result.equalsIgnoreCase("failed")){
 			this.resultField.setText("Wrong email/password combination.");
 		} else {
+			this.resultField.setText("");
 			Intent mainMenuScreen = new Intent(context, MainMenu.class);
 			context.startActivity(mainMenuScreen);
 		}
@@ -138,28 +150,6 @@ public class Login extends AsyncTask<String, Void, String> {
 		}
 		
 		return generatedPass;
-	}
-	
-	public static String getURL(){
-		Properties prop = new Properties();
-		InputStream input = null;
-		try{
-			input = new FileInputStream("config.properties");
-			prop.load(input);
-			String url = (prop.getProperty("url"));
-			return url;
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return null;
 	}
 
 }

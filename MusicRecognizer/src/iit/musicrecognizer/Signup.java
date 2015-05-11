@@ -2,7 +2,6 @@ package iit.musicrecognizer;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
@@ -34,7 +33,10 @@ public class Signup extends AsyncTask<String, Void, String> {
 			String password = params[2];
 			String salt = params[3];
 			
-			String link = "http://192.168.1.2/humzearch/signup.php";
+			int urlID = R.string.url;
+			String host = context.getResources().getString(urlID);
+			
+			String link = host + "signup.php";
 			String data = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
 			data += "&" + URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8");
 			data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");

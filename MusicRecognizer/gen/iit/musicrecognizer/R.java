@@ -107,6 +107,7 @@ public final class R {
         public static final int start=0x7f050016;
         public static final int stop=0x7f050017;
         public static final int submit_button=0x7f050004;
+        public static final int url=0x7f05001c;
         public static final int your_name=0x7f050003;
     }
     public static final class style {
