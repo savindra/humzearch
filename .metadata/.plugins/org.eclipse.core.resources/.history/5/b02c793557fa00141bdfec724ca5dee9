@@ -1,0 +1,5 @@
+package iit.musicrecognizer.app;
+
+public class AppController {
+
+}

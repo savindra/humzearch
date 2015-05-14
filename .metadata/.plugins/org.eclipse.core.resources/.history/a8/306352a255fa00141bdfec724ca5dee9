@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+    
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/viewTunesThumbnail"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="8dp" />
+    
+    <TextView
+        android:id="@+id/viewTunesName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/viewTunesThumbnail"
+        android:layout_toRightOf="@+id/viewTunesThumbnail"
+        android:textSize="@dimen/viewTunesName"
+        android:textStyle="bold" />
+    
+    <TextView
+        android:id="@+id/viewTunesID"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewTunesName"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/viewTunesThumbnail"
+        android:textSize="@dimen/viewTunesID" />
+    
+    <TextView
+        android:id="@+id/viewTunesDetails"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewTunesID"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/viewTunesThumbnail"
+        android:textColor="@color/genre"
+        android:textSize="@dimen/viewTunesDetails" />
+    
+    <TextView
+        android:id="@+id/viewTunesDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/year"
+        android:textSize="@dimen/viewTunesDate" />
+
+</RelativeLayout>

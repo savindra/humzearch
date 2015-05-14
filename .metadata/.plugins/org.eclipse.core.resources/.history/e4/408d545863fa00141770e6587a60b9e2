@@ -1,0 +1,15 @@
+package iit.musicrecognizer.model;
+
+import java.util.Date;
+
+public class Tune {
+	private String tuneID;
+	private String artist;
+	private String language;
+	private String year;
+	private String country;
+	private Date date_added;
+	private String author;
+	private String authorImgUrl;
+
+}

@@ -1,7 +1,0 @@
-package iit.musicrecognizer;
-
-import android.support
-
-public class RecordTuneActivity extends ActionBarActivity {
-
-}

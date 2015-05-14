@@ -47,8 +47,7 @@ public class Login extends AsyncTask<String, Long, String> {
 		int urlID = R.string.url;
 		String host = context.getResources().getString(urlID);
 		
-		String link = host + "login.php";
-		System.out.println(link);
+		String link = null + "login.php";
 		StringBuilder sb = new StringBuilder();
 		
 		try {

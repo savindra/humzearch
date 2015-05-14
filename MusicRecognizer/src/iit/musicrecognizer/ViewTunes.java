@@ -1,12 +1,50 @@
 package iit.musicrecognizer;
 
+import iit.musicrecognizer.adapter.TunesListAdapter;
+import iit.musicrecognizer.app.AppController;
+import iit.musicrecognizer.model.Tune;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 public class ViewTunes extends Activity{
+	
+	private static final String TAG  = ViewTunes.class.getSimpleName();
+	
+	int urlID;
+	String host;
+	private String url;
+	private ProgressDialog pDialog;
+	private List<Tune> tuneList = new ArrayList<Tune>();
+	private ListView listView;
+	private TunesListAdapter adapter;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +53,72 @@ public class ViewTunes extends Activity{
         
         getActionBar().setDisplayHomeAsUpEnabled(true);
         
-    }
+        urlID = R.string.url;
+        host = this.getResources().getString(urlID);
+        url = host + "viewtunes.php";
+        
+        listView = (ListView)findViewById(R.id.viewTunesListView);
+        adapter = new TunesListAdapter(this, tuneList);
+        listView.setAdapter(adapter);
+        
+        pDialog = new ProgressDialog(this);
+        
+        pDialog.setMessage("Loading...");
+        pDialog.show();
+        
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#1b1b1b")));
+        
+        JsonArrayRequest tuneReq = new JsonArrayRequest(url, new Response.Listener<JSONArray>(){
+
+			@Override
+			public void onResponse(JSONArray response) {
+				Log.d(TAG, response.toString());
+				hidePDialog();
+				
+				for(int i=0; i<response.length(); i++){
+					try{
+						JSONObject obj = response.getJSONObject(i);
+						Tune tune = new Tune();
+						tune.setArtist(obj.getString("artist"));
+						tune.setAuthor(obj.getString("name"));
+						tune.setAuthorImgUrl(obj.getString("img"));
+						tune.setCountry(obj.getString("country"));
+						
+						Timestamp stamp = new Timestamp(obj.getLong("date_added"));
+						Date date = new Date(stamp.getTime());
+						tune.setDate_added(date);
+						
+						tune.setLanguage(obj.getString("language"));
+						tune.setTuneID(obj.getString("tuneID"));
+						tune.setYear(obj.getInt("year"));
+						
+						tuneList.add(tune);
+						
+					} catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+			}
+        }, new Response.ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						VolleyLog.d(TAG, "Error: " + error.getMessage());
+                        hidePDialog();	
+					}
+       });
+        
+        AppController.getInstance().addToRequestQueue(tuneReq);
+        
+	}
+	
+	private void hidePDialog() {
+		if (pDialog != null) {
+            pDialog.dismiss();
+            pDialog = null;
+        }
+		
+	}
 
 
     @Override
@@ -48,6 +151,14 @@ public class ViewTunes extends Activity{
        moveTaskToBack(true);
        ViewTunes.this.finish();
     }
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		hidePDialog();
+	}
+    
+    
 }
 
 
