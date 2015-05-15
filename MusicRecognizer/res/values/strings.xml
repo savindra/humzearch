@@ -25,10 +25,12 @@
     <string name="Recording">Submit Tune</string>
     <string name="start">start</string>
     <string name="stop">stop</string>
-    <string name="play">play</string>
+    <string name="play">PLAY</string>
     <string name="LANGUAGE">Language</string>
     <string name="YEAR">Year</string>
     <string name="COUNTRY">Country</string>
     <string name="url">http://192.168.1.2/humzearch/</string>
+    <string name="addresponse">Add Response</string>
+    <string name="responsenotification">added response to your tune.</string>
 
 </resources>

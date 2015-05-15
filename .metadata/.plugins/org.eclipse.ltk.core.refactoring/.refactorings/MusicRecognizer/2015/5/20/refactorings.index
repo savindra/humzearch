@@ -12,3 +12,7 @@
 1431346149198	Delete element
 1431614577009	Rename resource 'viewtunesrow_layout.xml'
 1431626538604	Rename package 'iit.music.recognizer.adapter'
+1431676554512	Extracts string 'null' into R.string.addresponse
+1431702597215	Extracts string 'null' into R.string.responsenotification
+1431712782420	Delete element
+1431715016638	Rename type 'Response'

@@ -1,0 +1,45 @@
+package iit.musicrecognizer.model;
+
+public class Response {
+	
+	private int responseID;
+	private String username;
+	private Tune t;
+	private String artist;
+	private String title;
+	private String status;
+	private String Date;
+	
+	public int getResponseID() {
+		return responseID;
+	}
+	public void setResponseID(int responseID) {
+		this.responseID = responseID;
+	}
+	public String getArtist() {
+		return artist;
+	}
+	public void setArtist(String artist) {
+		this.artist = artist;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getDate() {
+		return Date;
+	}
+	public void setDate(String date) {
+		Date = date;
+	}
+	
+
+}

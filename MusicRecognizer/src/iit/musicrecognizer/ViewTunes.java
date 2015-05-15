@@ -4,9 +4,7 @@ import iit.musicrecognizer.adapter.TunesListAdapter;
 import iit.musicrecognizer.app.AppController;
 import iit.musicrecognizer.model.Tune;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -18,10 +16,17 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -29,9 +34,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ViewTunes extends Activity{
@@ -45,6 +51,9 @@ public class ViewTunes extends Activity{
 	private List<Tune> tuneList = new ArrayList<Tune>();
 	private ListView listView;
 	private TunesListAdapter adapter;
+	private SeekBar seekBar;
+	private MediaPlayer mediaPlayer;
+	Handler seekHandler = new Handler();
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +69,56 @@ public class ViewTunes extends Activity{
         listView = (ListView)findViewById(R.id.viewTunesListView);
         adapter = new TunesListAdapter(this, tuneList);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				TextView t = (TextView) view.findViewById(R.id.viewTunesName);
+				String s = t.getText().toString();
+				
+				final Dialog dialog = new Dialog(ViewTunes.this);
+				final MediaPlayer player = new MediaPlayer();
+				
+				dialog.setContentView(R.layout.viewtunes_dialog);
+				
+				dialog.setTitle("View Tune");
+				
+				seekBar = (SeekBar) findViewById(R.id.viewTunesseekBar);
+				Uri myUri = Uri.parse(host + "monster.mp3"); 
+				try{
+					mediaPlayer = new MediaPlayer();
+				    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+				    mediaPlayer = MediaPlayer.create(ViewTunes.this, myUri);
+				    seekBar.setMax(mediaPlayer.getDuration());
+				    seekUpdate();
+				    //mediaPlayer.prepare();
+				} catch (Exception e ){
+					e.printStackTrace();
+				}
+				
+				dialog.show();
+				dialog.setOnDismissListener(new OnDismissListener() {
+					@Override
+					public void onDismiss(DialogInterface dialog) {
+						mediaPlayer.stop();
+						
+					}
+				});
+				
+				
+				Button play = (Button) dialog.findViewById(R.id.viewTunesPlay);
+				
+				play.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						mediaPlayer.start();
+					}
+				});				
+				
+			}
+		});
         
         pDialog = new ProgressDialog(this);
         
@@ -81,13 +140,9 @@ public class ViewTunes extends Activity{
 						Tune tune = new Tune();
 						tune.setArtist(obj.getString("artist"));
 						tune.setAuthor(obj.getString("name"));
-						tune.setAuthorImgUrl(obj.getString("img"));
+						tune.setAuthorImgUrl(host + obj.getString("img"));
 						tune.setCountry(obj.getString("country"));
-						
-						Timestamp stamp = new Timestamp(obj.getLong("date_added"));
-						Date date = new Date(stamp.getTime());
-						tune.setDate_added(date);
-						
+						tune.setDate_added(obj.getString("date_added"));
 						tune.setLanguage(obj.getString("language"));
 						tune.setTuneID(obj.getString("tuneID"));
 						tune.setYear(obj.getInt("year"));
@@ -111,6 +166,20 @@ public class ViewTunes extends Activity{
         AppController.getInstance().addToRequestQueue(tuneReq);
         
 	}
+	
+	Runnable run = new Runnable(){
+		@Override
+		public void run() {
+			seekUpdate();
+			
+		}
+	};
+	
+	public void seekUpdate(){
+		seekBar.setProgress(mediaPlayer.getCurrentPosition());
+		seekHandler.postDelayed(run, 1000);
+	}
+
 	
 	private void hidePDialog() {
 		if (pDialog != null) {
@@ -157,7 +226,6 @@ public class ViewTunes extends Activity{
 		super.onDestroy();
 		hidePDialog();
 	}
-    
     
 }
 

@@ -71,8 +71,12 @@ public class TunesListAdapter extends BaseAdapter {
 		
 		tuneDetails.setText(t.getArtist() + ", " + t.getYear() + ", " + t.getLanguage() + ", " + t.getCountry());
 		
+		dateAdded.setText(t.getDate_added());
+		
 		
 		return convertView;
 	}
+	
+	
 
 }

@@ -22,6 +22,7 @@ public class Login extends AsyncTask<String, Long, String> {
 	private TextView resultField;
 	private Context context;
 	private String email;
+	private String userID;
 	private String password;
 	private ProgressDialog progressDialog;
 	
@@ -47,7 +48,7 @@ public class Login extends AsyncTask<String, Long, String> {
 		int urlID = R.string.url;
 		String host = context.getResources().getString(urlID);
 		
-		String link = null + "login.php";
+		String link = host + "login.php";
 		StringBuilder sb = new StringBuilder();
 		
 		try {
@@ -80,6 +81,7 @@ public class Login extends AsyncTask<String, Long, String> {
 					savedEmail = e.getString("email");
 					savedPass  = e.getString("password");
 					salt = e.getString("salt");
+					userID = e.getString("userID");
 				}
 				
 			} catch(Exception e){
@@ -115,6 +117,7 @@ public class Login extends AsyncTask<String, Long, String> {
 		} else {
 			this.resultField.setText("");
 			Intent mainMenuScreen = new Intent(context, MainMenu.class);
+			mainMenuScreen.putExtra("userID", userID);
 			context.startActivity(mainMenuScreen);
 		}
 	}

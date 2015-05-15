@@ -8,12 +8,12 @@ public class Tune {
 	private String language = "";
 	private int year;
 	private String country = "";
-	private Date date_added;
+	private String date_added;
 	private String author;
 	private String authorImgUrl;
 	
 	public Tune(String tuneID, String artist, String language, int year,
-			String country, Date date_added, String author, String authorImgUrl) {
+			String country, String date_added, String author, String authorImgUrl) {
 		super();
 		this.tuneID = tuneID;
 		this.artist = artist;
@@ -33,7 +33,7 @@ public class Tune {
 	}
 
 	public void setTuneID(String tuneID) {
-		this.tuneID = tuneID;
+		this.tuneID = "Tune ID: " + tuneID;
 	}
 
 	public String getArtist() {
@@ -68,11 +68,11 @@ public class Tune {
 		this.country = country;
 	}
 
-	public Date getDate_added() {
+	public String getDate_added() {
 		return date_added;
 	}
 
-	public void setDate_added(Date date_added) {
+	public void setDate_added(String date_added) {
 		this.date_added = date_added;
 	}
 
