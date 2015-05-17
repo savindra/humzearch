@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Humzearch</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="your_name">Name</string>
+    <string name="submit_button">Button</string>
+    <string name="button">Button</string>
+    <string name="login">LOGIN</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="signup">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="lblConfirmPass">Confirm Password</string>
+    <string name="btnviewtune">VIEW TUNES</string>
+    <string name="btnrecordtune">RECORD TUNE</string>
+    <string name="btnresponses">RESPONSES</string>
+    <string name="btnrewards">REWARDS</string>
+    <string name="btnmyaccount">MY ACCOUNT</string>
+    <string name="btnexit">EXIT</string>
+    <string name="lblhello">Hello!</string>
+    <string name="lblwelcome">Welcome to Humzsearch.</string>
+    <string name="Recording">Submit Tune</string>
+    <string name="start">start</string>
+    <string name="stop">stop</string>
+    <string name="play">PLAY</string>
+    <string name="LANGUAGE">Language</string>
+    <string name="YEAR">Year</string>
+    <string name="COUNTRY">Country</string>
+    <string name="url">http://192.168.1.2/humzearch/</string>
+    <string name="addresponse">Add Response</string>
+    <string name="responsenotification">added response to your tune.</string>
+    <string name="artist">Artist</string>
+
+</resources>

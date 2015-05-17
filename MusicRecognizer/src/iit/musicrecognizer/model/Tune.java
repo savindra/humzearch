@@ -6,13 +6,14 @@ public class Tune {
 	private String tuneID;
 	private String artist = "";
 	private String language = "";
-	private int year;
+	private String year;
 	private String country = "";
 	private String date_added;
 	private String author;
 	private String authorImgUrl;
+	private String fileurl;
 	
-	public Tune(String tuneID, String artist, String language, int year,
+	public Tune(String tuneID, String artist, String language, String year,
 			String country, String date_added, String author, String authorImgUrl) {
 		super();
 		this.tuneID = tuneID;
@@ -52,11 +53,11 @@ public class Tune {
 		this.language = language;
 	}
 
-	public int getYear() {
+	public String getYear() {
 		return year;
 	}
 
-	public void setYear(int year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
 
@@ -91,8 +92,14 @@ public class Tune {
 	public void setAuthorImgUrl(String authorImgUrl) {
 		this.authorImgUrl = authorImgUrl;
 	}
-	
-	
+
+	public String getFileurl() {
+		return fileurl;
+	}
+
+	public void setFileurl(String fileurl) {
+		this.fileurl = fileurl;
+	}
 	
 
 }

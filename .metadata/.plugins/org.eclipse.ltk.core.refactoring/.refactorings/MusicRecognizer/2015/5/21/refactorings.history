@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Extracts string &apos;null&apos; into R.string.redeem" description="Extracts string &apos;null&apos; into R.string.redeem" flags="6" id="com.android.ide.eclipse.adt.refactoring.extract.string" mode="SELECT_NEW_ID" proj="/MusicRecognizer" rplc-all-java="false" rplc-all-xml="false" stamp="1431860607042"/>&#x0A;<refactoring comment="Change Layout" description="Change Layout" file="/MusicRecognizer/res/layout/rewards_row_layout.xml" flags="6" flatten="true" id="com.android.ide.eclipse.adt.refactoring.convert" proj="/MusicRecognizer" sel-end="1862" sel-start="40" stamp="1431862395740" type="android.widget.LinearLayout"/>
+</session>

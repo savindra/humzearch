@@ -45,8 +45,7 @@ public class ResponsesActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.responses_layout);
         
-        Bundle bundle = getIntent().getExtras();
-        String userID = bundle.getString("userID");
+        String userID = Runtime.getUserID();
         
         urlID = R.string.url;
         host = this.getResources().getString(urlID);

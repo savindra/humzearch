@@ -1,0 +1,13 @@
+package iit.musicrecognizer.model;
+
+public class Reward {
+	
+	private String rewardID;
+	private String name;
+	private String desc;
+	private String image;
+	private int value;
+	private int quantity;
+	private Date date_added;
+
+}

@@ -85,7 +85,7 @@ public class ViewTunes extends Activity{
 				dialog.setTitle("View Tune");
 				
 				seekBar = (SeekBar) findViewById(R.id.viewTunesseekBar);
-				Uri myUri = Uri.parse(host + "monster.mp3"); 
+				Uri myUri = Uri.parse(host + tuneList.get(position).getFileurl()); 
 				try{
 					mediaPlayer = new MediaPlayer();
 				    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -145,7 +145,8 @@ public class ViewTunes extends Activity{
 						tune.setDate_added(obj.getString("date_added"));
 						tune.setLanguage(obj.getString("language"));
 						tune.setTuneID(obj.getString("tuneID"));
-						tune.setYear(obj.getInt("year"));
+						tune.setYear(obj.getString("year"));
+						tune.setFileurl(obj.getString("url"));
 						
 						tuneList.add(tune);
 						

@@ -51,11 +51,7 @@ public class MainMenu extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Bundle bundle = getIntent().getExtras();
-				String userID = bundle.getString("userID");
-				
 				Intent responsesScreen = new Intent(getApplicationContext(), ResponsesActivity.class);
-				responsesScreen.putExtra("userID", userID);
 				startActivity(responsesScreen);
 				
 			}
