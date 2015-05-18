@@ -4,6 +4,12 @@ import iit.musicrecognizer.adapter.RewardListAdapter;
 import iit.musicrecognizer.app.AppController;
 import iit.musicrecognizer.model.Reward;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,17 +22,31 @@ import com.android.volley.Response;
 import com.android.volley.VolleyLog;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.NetworkImageView;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class RewardsActivity extends Activity {
 	
@@ -39,6 +59,11 @@ private static final String TAG  = RewardsActivity.class.getSimpleName();
 	private List<Reward> rewardList = new ArrayList<Reward>();
 	private ListView listView;
 	private RewardListAdapter adapter;
+	private Dialog dialog;
+	private TextView name, desc, value;
+	private NetworkImageView img;
+	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+	String rewardID, rewardName, rewardValue;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +78,44 @@ private static final String TAG  = RewardsActivity.class.getSimpleName();
         adapter = new RewardListAdapter(this, rewardList);
         listView.setAdapter(adapter);
         
+        listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				
+				dialog = new Dialog(RewardsActivity.this);
+				dialog.setContentView(R.layout.rewards_dialog);
+				
+				dialog.setTitle("Redeem Rewards");
+				
+				img = (NetworkImageView) dialog.findViewById(R.id.rewardsDialogImg);
+				name = (TextView) dialog.findViewById(R.id.txtRewardDialogName);
+				desc = (TextView) dialog.findViewById(R.id.txtRewardDialogDesc);
+				value = (TextView) dialog.findViewById(R.id.txtRewardDialogvalue);
+				
+				img.setImageUrl(rewardList.get(position).getImage(), imageLoader);
+				name.setText(rewardList.get(position).getName());
+				desc.setText(rewardList.get(position).getDesc());
+				value.setText(rewardList.get(position).getValue() + " Points");
+				
+				rewardID = rewardList.get(position).getRewardID();
+				rewardName = rewardList.get(position).getName();
+				rewardValue = String.valueOf(rewardList.get(position).getValue());
+						
+				dialog.show();
+				
+				Button redeem = (Button) dialog.findViewById(R.id.btnRewardRedeem);
+				redeem.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						new RedeemItem(RewardsActivity.this).execute(rewardID, rewardName, rewardValue);
+					}
+				});
+			}
+		});
+                
         pDialog = new ProgressDialog(this);
         
         pDialog.setMessage("Loading...");
@@ -106,6 +169,7 @@ private static final String TAG  = RewardsActivity.class.getSimpleName();
 			}
 		});
         
+        
         AppController.getInstance().addToRequestQueue(rewardReq);
         
     }
@@ -138,6 +202,82 @@ private static final String TAG  = RewardsActivity.class.getSimpleName();
         return super.onOptionsItemSelected(item);
     }
     
+    public Context returnContext(){
+    	return RewardsActivity.this;
+    }
     
+    
+    private class RedeemItem extends AsyncTask<String, Long, String>{
+		
+		private Context context;
+		private ProgressDialog progressDialog;
+
+		public RedeemItem(Context context) {
+			super();
+			this.context = context;
+		}
+		
+		@Override
+		protected void onPreExecute() {
+		    try {
+		        progressDialog = ProgressDialog.show(context, "Redeem Rewards", "Please Wait...processing", true);
+		    } catch (final Throwable th) {
+		        //TODO
+		    }
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+			String rewardID = params[0];
+			String rewardName = params[1];
+			String rewardValue = params[2];
+			String userID = Runtime.getUserID();
+			
+			int urlID = R.string.url;
+			String host = context.getResources().getString(urlID);
+			
+			String link = host + "redeem.php";
+			StringBuilder sb = new StringBuilder();
+			
+			try{
+				String data = URLEncoder.encode("rewardID", "UTF-8") + "=" + URLEncoder.encode(rewardID, "UTF-8");
+				data += "&" + URLEncoder.encode("rewardName", "UTF-8") + "=" + URLEncoder.encode(rewardName, "UTF-8");
+				data += "&" + URLEncoder.encode("rewardValue", "UTF-8") + "=" + URLEncoder.encode(rewardValue, "UTF-8");
+				data += "&" + URLEncoder.encode("userID", "UTF-8") + "=" + URLEncoder.encode(userID, "UTF-8");
+				
+				URL url = new URL(link);
+				URLConnection conn = url.openConnection();
+				conn.setDoOutput(true); 
+				OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
+			    wr.write( data ); 
+			    wr.flush(); 
+			    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			    String line = null;
+			    
+			   //=== Get JSON Object from server ===
+			    while((line = reader.readLine()) != null){
+			    	sb.append(line);
+			    	break;
+			    }
+			    
+			} catch (Exception e){
+				return new String("Exception: " + e.getMessage());
+			}
+			
+			return sb.toString();
+		}
+		
+		protected void onProgressUpdate(Long... progress) {
+		    //do something
+		    super.onProgressUpdate(progress);
+		}
+		
+		protected void onPostExecute(String result){
+			progressDialog.dismiss();
+			Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+			System.out.println(result);
+		}
+		
+	}
 
 }

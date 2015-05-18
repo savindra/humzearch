@@ -30,31 +30,38 @@
         <activity android:name=".MainMenu"></activity>
         
         <activity android:name=".RecordTuneActivity"
-            android:parentActivityName= ".MainMenu">
+            android:parentActivityName= ".MainMenu"
+			android:label="Record Tune">
         </activity>
         
         <activity android:name=".ViewTunes"
-            android:parentActivityName= ".MainMenu">
+            android:parentActivityName= ".MainMenu"
+			android:label="View Tunes">
         </activity>
         
         <activity android:name=".ResponsesActivity"
-            android:parentActivityName= ".MainMenu">
+            android:parentActivityName= ".MainMenu"
+			android:label="Responses">
         </activity>
         
         <activity android:name=".RewardsActivity"
-            android:parentActivityName= ".MainMenu">
+            android:parentActivityName= ".MainMenu"
+			android:label="Rewards">
         </activity>
         
         <activity android:name=".MyAccountActivity"
-            android:parentActivityName= ".MainMenu">
+            android:parentActivityName= ".MainMenu"
+            android:label="My Account">
         </activity>
         
         <activity android:name=".LoginActivity"
-            android:parentActivityName= ".MainActivity">
+            android:parentActivityName= ".MainActivity"
+			android:label="Login">
         </activity>
         
         <activity android:name=".SignupActivity"
-            android:parentActivityName= ".MainActivity">
+            android:parentActivityName= ".MainActivity"
+			android:label="Sign Up">
         </activity>
         
     </application>

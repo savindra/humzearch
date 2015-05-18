@@ -46,7 +46,8 @@
         </activity>
         
         <activity android:name=".MyAccountActivity"
-            android:parentActivityName= ".MainMenu">
+            android:parentActivityName= ".MainMenu"
+            android:label="My Account">
         </activity>
         
         <activity android:name=".LoginActivity"
