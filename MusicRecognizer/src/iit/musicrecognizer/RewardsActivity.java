@@ -94,7 +94,8 @@ private static final String TAG  = RewardsActivity.class.getSimpleName();
 						e.printStackTrace();
 					}
 					
-				}	
+				}
+				adapter.notifyDataSetChanged();
 			}
 		}, new Response.ErrorListener() {
 

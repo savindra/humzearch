@@ -67,7 +67,7 @@ public class TunesListAdapter extends BaseAdapter {
 		
 		name.setText(t.getAuthor());
 		
-		tuneID.setText(t.getTuneID());
+		tuneID.setText("Tune ID: " + t.getTuneID());
 		
 		tuneDetails.setText(t.getArtist() + ", " + t.getYear() + ", " + t.getLanguage() + ", " + t.getCountry());
 		

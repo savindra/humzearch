@@ -52,6 +52,7 @@ public final class R {
         public static final int LinearLayout1=0x7f0a001f;
         public static final int action_settings=0x7f0a0038;
         public static final int activity_main=0x7f0a0000;
+        public static final int btnAddResponse=0x7f0a002f;
         public static final int btnMyAccount=0x7f0a000c;
         public static final int btnPlayRecord=0x7f0a000f;
         public static final int btnRecordTune=0x7f0a0008;
@@ -62,9 +63,6 @@ public final class R {
         public static final int btnStopRecord=0x7f0a000e;
         public static final int btnUploadTune=0x7f0a0019;
         public static final int button1=0x7f0a0029;
-        public static final int button2=0x7f0a002f;
-        public static final int editText1=0x7f0a002d;
-        public static final int editText2=0x7f0a002e;
         public static final int editText4=0x7f0a0028;
         public static final int languagespinner=0x7f0a0012;
         public static final int loginButton=0x7f0a0005;
@@ -93,6 +91,8 @@ public final class R {
         public static final int txtSignupPass=0x7f0a0027;
         public static final int txtSignupResult=0x7f0a002a;
         public static final int txtUploadPercentage=0x7f0a0017;
+        public static final int txtViewTunesAddArtist=0x7f0a002e;
+        public static final int txtViewTunesAddTitle=0x7f0a002d;
         public static final int uploadprogressBar=0x7f0a0018;
         public static final int view1=0x7f0a0007;
         public static final int viewTunesDate=0x7f0a0035;
@@ -114,15 +114,16 @@ public final class R {
         public static final int mainmenu_layout=0x7f030003;
         public static final int myaccount_layout=0x7f030004;
         public static final int recordtune_layout=0x7f030005;
-        public static final int responses_layout=0x7f030006;
-        public static final int responses_row_layout=0x7f030007;
-        public static final int rewards_layout=0x7f030008;
-        public static final int rewards_row_layout=0x7f030009;
-        public static final int signup_layout=0x7f03000a;
-        public static final int viewtunes_dialog=0x7f03000b;
-        public static final int viewtunes_layout=0x7f03000c;
-        public static final int viewtunes_row_layout=0x7f03000d;
-        public static final int welcome_layout=0x7f03000e;
+        public static final int responses_dialog=0x7f030006;
+        public static final int responses_layout=0x7f030007;
+        public static final int responses_row_layout=0x7f030008;
+        public static final int rewards_layout=0x7f030009;
+        public static final int rewards_row_layout=0x7f03000a;
+        public static final int signup_layout=0x7f03000b;
+        public static final int viewtunes_dialog=0x7f03000c;
+        public static final int viewtunes_layout=0x7f03000d;
+        public static final int viewtunes_row_layout=0x7f03000e;
+        public static final int welcome_layout=0x7f03000f;
     }
     public static final class menu {
         public static final int main=0x7f090000;
@@ -133,9 +134,9 @@ public final class R {
         public static final int Recording=0x7f060015;
         public static final int YEAR=0x7f06001a;
         public static final int action_settings=0x7f060002;
-        public static final int addresponse=0x7f06001e;
+        public static final int addresponse=0x7f06001d;
         public static final int app_name=0x7f060000;
-        public static final int artist=0x7f060020;
+        public static final int artist=0x7f06001f;
         public static final int btnexit=0x7f060012;
         public static final int btnmyaccount=0x7f060011;
         public static final int btnrecordtune=0x7f06000e;
@@ -153,16 +154,15 @@ public final class R {
         public static final int name=0x7f06000a;
         public static final int password=0x7f06000b;
         public static final int play=0x7f060018;
-        public static final int redeem=0x7f060023;
-        public static final int responsenotification=0x7f06001f;
+        public static final int redeem=0x7f060022;
+        public static final int responsenotification=0x7f06001e;
         public static final int signup=0x7f060008;
         public static final int start=0x7f060016;
         public static final int stop=0x7f060017;
         public static final int submit_button=0x7f060004;
-        public static final int title=0x7f060022;
-        public static final int upload=0x7f060021;
-        public static final int url=0x7f06001d;
-        public static final int url1=0x7f06001c;
+        public static final int title=0x7f060021;
+        public static final int upload=0x7f060020;
+        public static final int url=0x7f06001c;
         public static final int your_name=0x7f060003;
     }
     public static final class style {

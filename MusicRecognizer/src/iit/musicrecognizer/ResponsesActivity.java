@@ -25,6 +25,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class ResponsesActivity extends Activity {
@@ -55,6 +58,16 @@ public class ResponsesActivity extends Activity {
         adapter = new ResponseListAdapter(this, responseList);
         listView.setAdapter(adapter);
         
+        listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+        
         pDialog = new ProgressDialog(this);
         
         pDialog.setMessage("Loading...");
@@ -76,10 +89,12 @@ public class ResponsesActivity extends Activity {
 						User user = new User();
 						Tune tune = new Tune();
 						
+						user.setUserID(obj.getInt("userID"));
 						user.setName(obj.getString("name"));
 						user.setImage(host + obj.getString("img"));
 						
 						tune.setTuneID(obj.getString("tuneID"));
+						tune.setFileurl(obj.getString("url"));
 						
 						r.setUser(user);
 						r.setT(tune);
@@ -92,7 +107,7 @@ public class ResponsesActivity extends Activity {
 						e.printStackTrace();
 					}
 				}
-				
+				adapter.notifyDataSetChanged();
 			}
 			
 		}, new Response.ErrorListener() {

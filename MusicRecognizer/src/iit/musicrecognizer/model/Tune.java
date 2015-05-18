@@ -34,7 +34,7 @@ public class Tune {
 	}
 
 	public void setTuneID(String tuneID) {
-		this.tuneID = "Tune ID: " + tuneID;
+		this.tuneID = tuneID;
 	}
 
 	public String getArtist() {

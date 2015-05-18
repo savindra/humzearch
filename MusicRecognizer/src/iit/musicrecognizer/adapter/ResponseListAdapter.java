@@ -62,7 +62,7 @@ public class ResponseListAdapter extends BaseAdapter {
 		Responses r = responseItems.get(position);
 		
 		thumbNail.setImageUrl(r.getUser().getImage(), imageLoader);
-		message.setText(r.getUser().getName() + " added response to your tune. (" + r.getT().getTuneID() + ")");
+		message.setText(r.getUser().getName() + " added response to your tune. (Tune ID: " + r.getT().getTuneID() + ")");
 		date.setText(r.getDate());
 		
 		return convertView;

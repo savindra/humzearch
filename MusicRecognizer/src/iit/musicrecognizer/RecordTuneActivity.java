@@ -220,7 +220,7 @@ public class RecordTuneActivity extends Activity {
 				File sourceFile = new File(outputFile);
 				
 				entity.addPart("tune", new FileBody(sourceFile));
-				entity.addPart("userID", new StringBody("2"));
+				entity.addPart("userID", new StringBody(Runtime.getUserID()));
 				entity.addPart("artist", new StringBody(tune.getArtist()));
 				entity.addPart("language", new StringBody(tune.getLanguage()));
 				entity.addPart("country", new StringBody(tune.getCountry()));
