@@ -190,6 +190,7 @@ public class MyAccountActivity extends Activity {
 		
 		protected void onPostExecute(String result){
 			progressDialog.dismiss();
+			System.out.println(result);
 			Toast.makeText(context, result, Toast.LENGTH_LONG).show();
 		}
 		

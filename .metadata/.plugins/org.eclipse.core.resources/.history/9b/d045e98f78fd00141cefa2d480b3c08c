@@ -45,9 +45,6 @@ public class MyAccountActivity extends Activity {
 	Address objAddress;
 	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 	private Dialog dialog;
-	TextView address1, address2, city, postcode;
-	Spinner country;
-	Button addEdit;
 	
 	
 	@Override
@@ -74,6 +71,10 @@ public class MyAccountActivity extends Activity {
 		dialog.setContentView(R.layout.address_dialog);
 		dialog.setTitle("Add/Edit Address");
 		
+		TextView address1, address2, city, postcode;
+		Spinner country;
+		Button addEdit;
+		
 		address1 = (TextView) dialog.findViewById(R.id.txtMyAccountDialogAddress1);
 		address2 = (TextView) dialog.findViewById(R.id.txtMyAccountDialogAddress2);
 		city = (TextView) dialog.findViewById(R.id.txtMyAccountDialogCity);
@@ -92,7 +93,8 @@ public class MyAccountActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				new AddAddress(MyAccountActivity.this).execute();
+				
+				
 			}
 		});
 		
@@ -133,69 +135,21 @@ public class MyAccountActivity extends Activity {
 		    }
 		}
 		
+
 		public AddAddress(Context context) {
 			super();
 			this.context = context;
 		}
 
 
+
 		@Override
 		protected String doInBackground(String... params) {
-			String adrs1 = address1.getText().toString();
-			String adrs2 = address2.getText().toString();
-			String cty = city.getText().toString();
-			String pstcode = postcode.getText().toString();
-			String cntry = String.valueOf(country.getSelectedItem());
-			String addressID = objAddress.getAddressID();
-			
-			int urlID = R.string.url;
-			String host = context.getResources().getString(urlID);
-			
-			String link = host + "useraddress.php";
-			StringBuilder sb = new StringBuilder();
-			
-			try{
-				String data = URLEncoder.encode("address1", "UTF-8") + "=" + URLEncoder.encode(adrs1, "UTF-8");
-				data += "&" + URLEncoder.encode("address2", "UTF-8") + "=" + URLEncoder.encode(adrs2, "UTF-8");
-				data += "&" + URLEncoder.encode("city", "UTF-8") + "=" + URLEncoder.encode(cty, "UTF-8");
-				data += "&" + URLEncoder.encode("postcode", "UTF-8") + "=" + URLEncoder.encode(pstcode, "UTF-8");
-				data += "&" + URLEncoder.encode("country", "UTF-8") + "=" + URLEncoder.encode(cntry, "UTF-8");
-				data += "&" + URLEncoder.encode("addressID", "UTF-8") + "=" + URLEncoder.encode(addressID, "UTF-8");
-				
-				URL url = new URL(link);
-				URLConnection conn = url.openConnection();
-				conn.setDoOutput(true); 
-				OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
-			    wr.write( data ); 
-			    wr.flush(); 
-			    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			    String line = null;
-			    
-			    while((line = reader.readLine()) != null){
-			    	sb.append(line);
-			    	break;
-			    }
-			    
-			} catch (Exception e){
-				return new String("Exception: " + e.getMessage());
-			}
-			
-			return sb.toString();
+			// TODO Auto-generated method stub
+			return null;
 		}
-		
-		protected void onProgressUpdate(Long... progress) {
-		    //do something
-		    super.onProgressUpdate(progress);
-		}
-		
-		protected void onPostExecute(String result){
-			progressDialog.dismiss();
-			Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-		}
-		
+    	
     }
-    
-    
     
     private class UserDetails extends AsyncTask<String, Long, String>{
     	

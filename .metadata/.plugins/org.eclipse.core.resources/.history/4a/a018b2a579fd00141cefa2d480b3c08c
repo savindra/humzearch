@@ -151,7 +151,7 @@ public class MyAccountActivity extends Activity {
 			int urlID = R.string.url;
 			String host = context.getResources().getString(urlID);
 			
-			String link = host + "useraddress.php";
+			String link = host + "getuser.php";
 			StringBuilder sb = new StringBuilder();
 			
 			try{
@@ -161,41 +161,12 @@ public class MyAccountActivity extends Activity {
 				data += "&" + URLEncoder.encode("postcode", "UTF-8") + "=" + URLEncoder.encode(pstcode, "UTF-8");
 				data += "&" + URLEncoder.encode("country", "UTF-8") + "=" + URLEncoder.encode(cntry, "UTF-8");
 				data += "&" + URLEncoder.encode("addressID", "UTF-8") + "=" + URLEncoder.encode(addressID, "UTF-8");
-				
-				URL url = new URL(link);
-				URLConnection conn = url.openConnection();
-				conn.setDoOutput(true); 
-				OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
-			    wr.write( data ); 
-			    wr.flush(); 
-			    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			    String line = null;
-			    
-			    while((line = reader.readLine()) != null){
-			    	sb.append(line);
-			    	break;
-			    }
-			    
-			} catch (Exception e){
-				return new String("Exception: " + e.getMessage());
 			}
 			
-			return sb.toString();
+			return null;
 		}
-		
-		protected void onProgressUpdate(Long... progress) {
-		    //do something
-		    super.onProgressUpdate(progress);
-		}
-		
-		protected void onPostExecute(String result){
-			progressDialog.dismiss();
-			Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-		}
-		
+    	
     }
-    
-    
     
     private class UserDetails extends AsyncTask<String, Long, String>{
     	

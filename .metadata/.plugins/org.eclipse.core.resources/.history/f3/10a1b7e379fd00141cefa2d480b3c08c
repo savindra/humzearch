@@ -182,20 +182,8 @@ public class MyAccountActivity extends Activity {
 			
 			return sb.toString();
 		}
-		
-		protected void onProgressUpdate(Long... progress) {
-		    //do something
-		    super.onProgressUpdate(progress);
-		}
-		
-		protected void onPostExecute(String result){
-			progressDialog.dismiss();
-			Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-		}
-		
+    	
     }
-    
-    
     
     private class UserDetails extends AsyncTask<String, Long, String>{
     	

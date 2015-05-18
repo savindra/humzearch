@@ -195,8 +195,6 @@ public class MyAccountActivity extends Activity {
 		
     }
     
-    
-    
     private class UserDetails extends AsyncTask<String, Long, String>{
     	
     	private Context context;

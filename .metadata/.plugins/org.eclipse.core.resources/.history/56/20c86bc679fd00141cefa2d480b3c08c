@@ -170,32 +170,12 @@ public class MyAccountActivity extends Activity {
 			    wr.flush(); 
 			    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			    String line = null;
-			    
-			    while((line = reader.readLine()) != null){
-			    	sb.append(line);
-			    	break;
-			    }
-			    
-			} catch (Exception e){
-				return new String("Exception: " + e.getMessage());
 			}
 			
-			return sb.toString();
+			return null;
 		}
-		
-		protected void onProgressUpdate(Long... progress) {
-		    //do something
-		    super.onProgressUpdate(progress);
-		}
-		
-		protected void onPostExecute(String result){
-			progressDialog.dismiss();
-			Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-		}
-		
+    	
     }
-    
-    
     
     private class UserDetails extends AsyncTask<String, Long, String>{
     	
