@@ -1,6 +1,7 @@
 package iit.musicrecognizer;
 
 import iit.musicrecognizer.app.AppController;
+import iit.musicrecognizer.model.Address;
 import iit.musicrecognizer.model.User;
 
 import java.io.BufferedReader;
@@ -19,6 +20,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -26,16 +28,22 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyAccountActivity extends Activity {
 	
 	private TextView name, email, dateJoined, points, address, device;
+	private Button addressAddEdit;
 	private NetworkImageView img;
 	private String userID;
 	User user;
+	Address objAddress;
 	ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+	private Dialog dialog;
 	
 	
 	@Override
@@ -50,10 +58,35 @@ public class MyAccountActivity extends Activity {
         device = (TextView) findViewById(R.id.txtMyAcountDevice);
         img = (NetworkImageView) findViewById(R.id.myAccountImg);
         points = (TextView) findViewById(R.id.txtMyAccountPoints);
+        addressAddEdit = (Button) findViewById(R.id.btnMyAccountAddress);
          
         new UserDetails(MyAccountActivity.this).execute();
         
     }
+	
+	public void addEdit(View view){
+		
+		dialog = new Dialog(MyAccountActivity.this);
+		dialog.setContentView(R.layout.address_dialog);
+		dialog.setTitle("Add/Edit Address");
+		
+		TextView address1, address2, city, postcode;
+		Spinner country;
+		Button addEdit;
+		
+		address1 = (TextView) dialog.findViewById(R.id.txtMyAccountDialogAddress1);
+		address2 = (TextView) dialog.findViewById(R.id.txtMyAccountDialogAddress2);
+		city = (TextView) dialog.findViewById(R.id.txtMyAccountDialogCity);
+		postcode = (TextView) dialog.findViewById(R.id.txtMyAccountDialogPostcode);
+		country = (Spinner) dialog.findViewById(R.id.spinnerMyAccountDialogCounty);
+		
+		address1.setText(objAddress.getAddress1());
+		address2.setText(objAddress.getAddress2());
+		city.setText(objAddress.getCity());
+		postcode.setText(objAddress.getPostcode());
+		
+		dialog.show();
+	}
 
 
     @Override
@@ -130,6 +163,7 @@ public class MyAccountActivity extends Activity {
 					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 					Date date;
 					user = new User();
+					objAddress = new Address();
 					for(int i=0; i<jsonResponse.length(); i++){
 						JSONObject e = jsonResponse.getJSONObject(i);
 						user.setName(e.getString("name"));
@@ -140,6 +174,14 @@ public class MyAccountActivity extends Activity {
 						user.setDate_added(date);
 						user.setImage(e.getString("image"));
 						user.setPoints(e.getInt("points"));
+						
+						objAddress.setAddressID(e.getString("addressID"));
+						objAddress.setAddress1(e.getString("address1"));
+						objAddress.setAddress2(e.getString("address2"));
+						objAddress.setCity(e.getString("city"));
+						objAddress.setCountry(e.getString("country"));
+						objAddress.setPostcode(e.getString("postcode"));
+						
 					}
 					
 				} catch(Exception e){
@@ -168,6 +210,18 @@ public class MyAccountActivity extends Activity {
 			dateJoined.setText(user.getDate_added().toString());
 			img.setImageUrl(host + user.getImage(), imageLoader);
 			points.setText(user.getPoints() + " Points");
+			
+			String address1 = objAddress.getAddress1();
+			String address2 = objAddress.getAddress2();
+			String city = objAddress.getCity();
+			String country = objAddress.getCountry();
+			String postcode = objAddress.getPostcode();
+			address.setText(address1 + ",\n" + address2 + ",\n" + city + ",\n" + country + " " + postcode);
+			
+			if(address1.equals("")){
+				address.setText("Address not entered.");
+			}
+			
 			device.setText(Build.MODEL);
 			progressDialog.dismiss();
 		}

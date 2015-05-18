@@ -295,5 +295,6 @@
 	    <string name="playtune">Play Your Tune</string>
 	    <string name="approve">Approve</string>
 	    <string name="reject">Reject</string>
+	    <string name="addedit">Add/Edit</string>
 
 </resources>

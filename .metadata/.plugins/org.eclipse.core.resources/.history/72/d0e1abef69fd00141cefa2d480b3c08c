@@ -1,0 +1,5 @@
+package iit.musicrecognizer.model;
+
+public class Address {
+
+}
