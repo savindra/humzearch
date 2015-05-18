@@ -282,7 +282,6 @@ public class ViewTunes extends Activity{
 			String artist = params[1];
 			String userID = Runtime.getUserID();
 			
-			
 			int urlID = R.string.url;
 			String host = context.getResources().getString(urlID);
 			

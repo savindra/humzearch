@@ -6,6 +6,12 @@ import iit.musicrecognizer.model.Responses;
 import iit.musicrecognizer.model.Tune;
 import iit.musicrecognizer.model.User;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,17 +24,30 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.Response;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class ResponsesActivity extends Activity {
 	
@@ -36,11 +55,14 @@ public class ResponsesActivity extends Activity {
 	
 	int urlID;
 	String host;
-	private String url;
+	private String url, responseID, respondedUserID;
 	private ProgressDialog pDialog;
 	private List<Responses> responseList = new ArrayList<Responses>();
 	private ListView listView;
 	private ResponseListAdapter adapter;
+	private Dialog dialog;
+	private MediaPlayer mediaPlayer;
+	private TextView title, artist;
 	
 	
 	@Override
@@ -63,7 +85,59 @@ public class ResponsesActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
+				
+				responseID = String.valueOf(responseList.get(position).getResponseID());
+				respondedUserID = String.valueOf(responseList.get(position).getUser().getUserID());
+				
+				dialog = new Dialog(ResponsesActivity.this);
+				dialog.setContentView(R.layout.responses_dialog);
+				dialog.setTitle("View Responses");
+				
+				Uri myUri = Uri.parse(host + responseList.get(position).getT().getFileurl());
+				
+				try{
+					mediaPlayer = new MediaPlayer();
+				    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+				    mediaPlayer = MediaPlayer.create(ResponsesActivity.this, myUri);
+				    //mediaPlayer.prepare();
+				} catch (Exception e ){
+					e.printStackTrace();
+				}
+				
+				dialog.show();
+				dialog.setOnDismissListener(new OnDismissListener() {
+					@Override
+					public void onDismiss(DialogInterface dialog) {
+						mediaPlayer.stop();
+						
+					}
+				});
+				
+				Button play = (Button) dialog.findViewById(R.id.btnResponsePlayTune);
+				play.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						mediaPlayer.start();
+					}
+				});
+				
+				title = (TextView) dialog.findViewById(R.id.txtResponseTitle);
+				artist = (TextView) dialog.findViewById(R.id.txtResponseArtist);
+				
+				title.setText("Suggested Title: " + responseList.get(position).getTitle());
+				artist.setText("Suggested Artist: " + responseList.get(position).getArtist());
+				
+				Button approve =  (Button) dialog.findViewById(R.id.btnResponseApprove);
+				
+				approve.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						
+						new ReplyToResponse(ResponsesActivity.this).execute(responseID, "1", respondedUserID);
+					}
+				});
 				
 			}
 		});
@@ -98,6 +172,7 @@ public class ResponsesActivity extends Activity {
 						
 						r.setUser(user);
 						r.setT(tune);
+						r.setResponseID(obj.getInt("responseID"));
 						r.setArtist(obj.getString("artist"));
 						r.setTitle(obj.getString("tune_title"));
 						r.setDate(obj.getString("date_added"));
@@ -160,6 +235,79 @@ public class ResponsesActivity extends Activity {
     public void onBackPressed() {
        moveTaskToBack(true);
        ResponsesActivity.this.finish();
+    }
+    
+    
+    
+    private class ReplyToResponse extends AsyncTask<String, Long, String>{
+    	
+    	private Context context;
+		private ProgressDialog progressDialog;
+
+		public ReplyToResponse(Context context) {
+			super();
+			this.context = context;
+		}
+		
+		@Override
+		protected void onPreExecute() {
+		    try {
+		        progressDialog = ProgressDialog.show(context, "Response", "Please Wait...", true);
+		    } catch (final Throwable th) {
+		        //TODO
+		    }
+		}
+
+
+		@Override
+		protected String doInBackground(String... params) {
+			String responseID = params[0];
+			String status = params[1];
+			String respondedUserID = params[2];
+			
+			int urlID = R.string.url;
+			String host = context.getResources().getString(urlID);
+			
+			String link = host + "replytoresponse.php";
+			StringBuilder sb = new StringBuilder();
+			
+			try{
+				String data = URLEncoder.encode("userID", "UTF-8") + "=" + URLEncoder.encode(respondedUserID, "UTF-8");
+				data += "&" + URLEncoder.encode("responseID", "UTF-8") + "=" + URLEncoder.encode(responseID, "UTF-8");
+				data += "&" + URLEncoder.encode("status", "UTF-8") + "=" + URLEncoder.encode(status, "UTF-8");
+				
+				URL url = new URL(link);
+				URLConnection conn = url.openConnection();
+				conn.setDoOutput(true); 
+				OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
+			    wr.write( data ); 
+			    wr.flush(); 
+			    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			    String line = null;
+			    
+			  //=== Get JSON Object from server ===
+			    while((line = reader.readLine()) != null){
+			    	sb.append(line);
+			    	break;
+			    }
+			} catch (Exception e){
+				return new String("Exception: " + e.getMessage());
+			}
+			
+			return sb.toString();
+		}
+		
+		
+		protected void onProgressUpdate(Long... progress) {
+		    //do something
+		    super.onProgressUpdate(progress);
+		}
+		
+		protected void onPostExecute(String result){
+			progressDialog.dismiss();
+			Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+		}
+    	
     }
 
 }

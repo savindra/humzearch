@@ -1,0 +1,282 @@
+package iit.musicrecognizer;
+
+import iit.musicrecognizer.adapter.ResponseListAdapter;
+import iit.musicrecognizer.app.AppController;
+import iit.musicrecognizer.model.Responses;
+import iit.musicrecognizer.model.Tune;
+import iit.musicrecognizer.model.User;
+
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.Response;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.TextView;
+
+public class ResponsesActivity extends Activity {
+	
+	private static final String TAG  = ResponsesActivity.class.getSimpleName();
+	
+	int urlID;
+	String host;
+	private String url, responseID, respondedUserID;
+	private ProgressDialog pDialog;
+	private List<Responses> responseList = new ArrayList<Responses>();
+	private ListView listView;
+	private ResponseListAdapter adapter;
+	private Dialog dialog;
+	private MediaPlayer mediaPlayer;
+	private TextView title, artist;
+	
+	
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.responses_layout);
+        
+        String userID = Runtime.getUserID();
+        
+        urlID = R.string.url;
+        host = this.getResources().getString(urlID);
+        url = host + "viewresponse.php?userID=" + userID;
+        
+        listView = (ListView) findViewById(R.id.responsesListView);
+        adapter = new ResponseListAdapter(this, responseList);
+        listView.setAdapter(adapter);
+        
+        listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				
+				responseID = String.valueOf(responseList.get(position).getResponseID());
+				respondedUserID = String.valueOf(responseList.get(position).getUser().getUserID());
+				
+				dialog = new Dialog(ResponsesActivity.this);
+				dialog.setContentView(R.layout.responses_dialog);
+				dialog.setTitle("View Responses");
+				
+				Uri myUri = Uri.parse(host + responseList.get(position).getT().getFileurl());
+				
+				try{
+					mediaPlayer = new MediaPlayer();
+				    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+				    mediaPlayer = MediaPlayer.create(ResponsesActivity.this, myUri);
+				    //mediaPlayer.prepare();
+				} catch (Exception e ){
+					e.printStackTrace();
+				}
+				
+				dialog.show();
+				dialog.setOnDismissListener(new OnDismissListener() {
+					@Override
+					public void onDismiss(DialogInterface dialog) {
+						mediaPlayer.stop();
+						
+					}
+				});
+				
+				Button play = (Button) dialog.findViewById(R.id.btnResponsePlayTune);
+				play.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						mediaPlayer.start();
+					}
+				});
+				
+				title = (TextView) dialog.findViewById(R.id.txtResponseTitle);
+				artist = (TextView) dialog.findViewById(R.id.txtResponseArtist);
+				
+				title.setText("Suggested Title: " + responseList.get(position).getTitle());
+				artist.setText("Suggested Artist: " + responseList.get(position).getArtist());
+				
+				Button approve =  (Button) dialog.findViewById(R.id.btnResponseApprove);
+				
+				approve.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						
+						new ReplyToResponse(ResponsesActivity.this).execute(responseID, "1", respondedUserID);
+					}
+				});
+				
+			}
+		});
+        
+        pDialog = new ProgressDialog(this);
+        
+        pDialog.setMessage("Loading...");
+        pDialog.show();
+        
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#1b1b1b")));
+        
+        JsonArrayRequest responseReq = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+
+			@Override
+			public void onResponse(JSONArray response) {
+				Log.d(TAG, response.toString());
+				hidePDialog();
+				
+				for(int i=0; i<response.length(); i++){
+					try{
+						JSONObject obj = response.getJSONObject(i);
+						Responses r = new Responses();
+						User user = new User();
+						Tune tune = new Tune();
+						
+						user.setUserID(obj.getInt("userID"));
+						user.setName(obj.getString("name"));
+						user.setImage(host + obj.getString("img"));
+						
+						tune.setTuneID(obj.getString("tuneID"));
+						tune.setFileurl(obj.getString("url"));
+						
+						r.setUser(user);
+						r.setT(tune);
+						r.setArtist(obj.getString("artist"));
+						r.setTitle(obj.getString("tune_title"));
+						r.setDate(obj.getString("date_added"));
+						responseList.add(r);
+						
+					} catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+				adapter.notifyDataSetChanged();
+			}
+			
+		}, new Response.ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				VolleyLog.d(TAG, "Error: " + error.getMessage());
+                hidePDialog();
+			}
+		});
+        
+        AppController.getInstance().addToRequestQueue(responseReq);
+    }
+	
+	private void hidePDialog() {
+		if (pDialog != null) {
+            pDialog.dismiss();
+            pDialog = null;
+        }
+		
+	}
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		hidePDialog();
+	}
+	
+    @Override
+    public void onBackPressed() {
+       moveTaskToBack(true);
+       ResponsesActivity.this.finish();
+    }
+    
+    
+    
+    private class ReplyToResponse extends AsyncTask<String, Long, String>{
+    	
+    	private Context context;
+		private ProgressDialog progressDialog;
+
+		public ReplyToResponse(Context context) {
+			super();
+			this.context = context;
+		}
+		
+		@Override
+		protected void onPreExecute() {
+		    try {
+		        progressDialog = ProgressDialog.show(context, "Response", "Please Wait...", true);
+		    } catch (final Throwable th) {
+		        //TODO
+		    }
+		}
+
+
+		@Override
+		protected String doInBackground(String... params) {
+			String responseID = params[0];
+			String status;
+			if(params[1].equals("1")){
+				status = "approved";
+			} else {
+				status = "rejected";
+			}
+			
+			int urlID = R.string.url;
+			String host = context.getResources().getString(urlID);
+			
+			String link = host + "addresponse.php";
+			StringBuilder sb = new StringBuilder();
+			
+			try{
+				String data = URLEncoder.encode(")
+			}
+			
+			
+			
+			return null;
+		}
+    	
+    }
+
+}
