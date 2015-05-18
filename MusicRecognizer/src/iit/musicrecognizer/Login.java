@@ -22,7 +22,7 @@ public class Login extends AsyncTask<String, Long, String> {
 	private TextView resultField;
 	private Context context;
 	private String email;
-	private String userID;
+	private String userID, name;
 	private String password;
 	private ProgressDialog progressDialog;
 	
@@ -82,6 +82,8 @@ public class Login extends AsyncTask<String, Long, String> {
 					savedPass  = e.getString("password");
 					salt = e.getString("salt");
 					userID = e.getString("userID");
+					name = e.getString("name");
+					
 				}
 				
 			} catch(Exception e){
@@ -118,6 +120,7 @@ public class Login extends AsyncTask<String, Long, String> {
 			this.resultField.setText("");
 			Intent mainMenuScreen = new Intent(context, MainMenu.class);
 			Runtime.setUserID(userID);
+			Runtime.setName(name);
 			context.startActivity(mainMenuScreen);
 		}
 	}

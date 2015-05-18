@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SignupActivity extends Activity {
 	
@@ -56,7 +57,12 @@ public class SignupActivity extends Activity {
     	String salt = getSalt();
     	String securedPass = get_SHA_256_SecurePassword(password, salt);
     	
-    	new Signup(this, result).execute(email, name, securedPass, salt);
+    	if(email.equals("") || name.equals("") || password.equals("")){
+    		Toast.makeText(this, "Empty Fields.", Toast.LENGTH_SHORT).show();
+    	}else {
+    		new Signup(this, result).execute(email, name, securedPass, salt);
+    	}
+    	
     	
     }
     

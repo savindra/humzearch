@@ -29,7 +29,7 @@
     <string name="LANGUAGE">Language</string>
     <string name="YEAR">Year</string>
     <string name="COUNTRY">Country</string>
-    <string name="url">http://192.168.1.2/humzearch/</string>
+    <string name="url">http://humzearch.techalf.com/</string>
     <string name="addresponse">Add Response</string>
     <string name="responsenotification">added response to your tune.</string>
     <string name="artist">Artist</string>

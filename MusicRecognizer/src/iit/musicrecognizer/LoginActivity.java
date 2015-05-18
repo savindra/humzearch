@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 	
@@ -46,7 +47,12 @@ public class LoginActivity extends Activity {
     public void login(View view){
     	String email = emailField.getText().toString();
     	String password = passwordField.getText().toString();
-    	new Login(this, result).execute(email, password);
+    	
+    	if(email.equals("") || password.equals("")){
+    		Toast.makeText(this, "Please enter email and password.", Toast.LENGTH_SHORT).show();
+    	}else {
+    		new Login(this, result).execute(email, password);
+    	}
     }
 
 }

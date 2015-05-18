@@ -63,7 +63,7 @@ public class ViewTunes extends Activity{
 	private SeekBar seekBar;
 	private MediaPlayer mediaPlayer;
 	Handler seekHandler = new Handler();
-	private String tuneID;
+	private String tuneID, author;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +87,7 @@ public class ViewTunes extends Activity{
 					int position, long id) {
 				
 				tuneID = tuneList.get(position).getTuneID();
+				author = tuneList.get(position).getAuthor();
 				System.out.println(tuneID);
 				
 				final Dialog dialog = new Dialog(ViewTunes.this);
@@ -138,7 +139,12 @@ public class ViewTunes extends Activity{
 					public void onClick(View v) {
 						String title = tuneTitle.getText().toString();
 						String artist = tuneArtist.getText().toString();
-						new AddResponse(ViewTunes.this).execute(title, artist, tuneID);
+						if(Runtime.getName().equals(author)){
+							Toast.makeText(ViewTunes.this, "You can't add a response to your tune.", Toast.LENGTH_SHORT).show();
+						} else {
+							new AddResponse(ViewTunes.this).execute(title, artist, tuneID);
+						}
+						
 						
 					}
 				});

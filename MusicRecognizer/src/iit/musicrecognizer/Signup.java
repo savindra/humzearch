@@ -7,14 +7,16 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
-public class Signup extends AsyncTask<String, Void, String> {
+public class Signup extends AsyncTask<String, Long, String> {
 
 	private TextView resultField;
 	private Context context;
+	private ProgressDialog progressDialog;
 	
 	public Signup(Context context, TextView result) {
 		this.context = context;
@@ -22,6 +24,12 @@ public class Signup extends AsyncTask<String, Void, String> {
 	}
 	
 	protected void onPreExecute(){
+		
+		try {
+	        progressDialog = ProgressDialog.show(context, "Sign Up", "Please Wait...Sign Up in Progress..", true);
+	    } catch (final Throwable th) {
+	        //TODO
+	    }
 
 	}
 
@@ -63,7 +71,13 @@ public class Signup extends AsyncTask<String, Void, String> {
 		}
 	}
 	
+	protected void onProgressUpdate(Long... progress) {
+	    //do something
+	    super.onProgressUpdate(progress);
+	}
+	
 	protected void onPostExecute(String result){
+		progressDialog.dismiss();
 		if(result.equalsIgnoreCase("true") ){
 			this.resultField.setText("Registration Completed.You may login now.");
 		} else{

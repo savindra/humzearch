@@ -28,7 +28,6 @@
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="com.android.volley.Response.ErrorListener"/>
 <fullyQualifiedTypeName name="com.android.volley.Response"/>
-<fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="iit.musicrecognizer.ViewTunes.AddResponse"/>
 <fullyQualifiedTypeName name="android.location.Address"/>
 <fullyQualifiedTypeName name="iit.musicrecognizer.ResponsesActivity.ReplyToResponse"/>
@@ -55,9 +54,10 @@
 <fullyQualifiedTypeName name="iit.musicrecognizer.R.id"/>
 <fullyQualifiedTypeName name="android.view.View"/>
 <fullyQualifiedTypeName name="iit.musicrecognizer.model.Address"/>
-<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.os.AsyncTask"/>
 <fullyQualifiedTypeName name="iit.musicrecognizer.MyAccountActivity.AddAddress"/>
 <fullyQualifiedTypeName name="iit.musicrecognizer.MyAccountActivity"/>
 <fullyQualifiedTypeName name="java.net.URLEncoder"/>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="android.widget.Toast"/>
 </qualifiedTypeNameHistroy>
